@@ -1,4 +1,4 @@
-package com.example.androidmvvmcoroutines.model
+package com.example.androidmvvmcoroutines.data.response
 
 data class Article(
     val source: Source,

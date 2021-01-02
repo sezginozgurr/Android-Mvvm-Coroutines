@@ -4,41 +4,28 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.example.androidmvvmcoroutines.R
 import com.example.androidmvvmcoroutines.adapter.BaseAdapter
-import com.example.androidmvvmcoroutines.data.network.ApiService
-import com.example.androidmvvmcoroutines.data.network.RetrofitClient
 import com.example.androidmvvmcoroutines.databinding.ActivityMainBinding
-import com.example.androidmvvmcoroutines.model.Article
-import com.example.androidmvvmcoroutines.model.NewsResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.androidmvvmcoroutines.data.response.NewsResponse
+import com.example.androidmvvmcoroutines.vm.HomeViewModel
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var newsList: NewsResponse? = null
+    private val newsViewModel: HomeViewModel by viewModels()
+    //private lateinit var viewModel: HomeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val api: ApiService = RetrofitClient.getRetrofit().create(ApiService::class.java)
-
-        val newsResponse: Call<NewsResponse> = api.getNews()
-
-        newsResponse.enqueue(object : Callback<NewsResponse> {
-            override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
-                response.body().let {
-                    newsList = it
-                    setAdapter()
-                }
-            }
-            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {}
-
+        newsViewModel.request.observe(this, {
+            newsList = it
+            setAdapter()
         })
 
     }
@@ -46,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private fun setAdapter() {
         binding.recyclerNews.apply {
             adapter = BaseAdapter(
-                this@MainActivity,
+                this@HomeActivity,
                 R.layout.row_item_news,
                 newsList?.articles
             ) { v, item, position ->

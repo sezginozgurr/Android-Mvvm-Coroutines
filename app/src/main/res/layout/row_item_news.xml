@@ -6,7 +6,7 @@
     android:layout_height="200dp"
     android:layout_margin="16dp"
     app:cardElevation="12dp"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.HomeActivity">
 
     <FrameLayout
         android:id="@+id/cardRoot"
