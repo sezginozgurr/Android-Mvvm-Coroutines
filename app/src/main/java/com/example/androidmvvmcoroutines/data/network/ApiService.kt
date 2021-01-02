@@ -1,5 +1,6 @@
 package com.example.androidmvvmcoroutines.data.network
 
+import com.example.androidmvvmcoroutines.model.Article
 import com.example.androidmvvmcoroutines.model.NewsResponse
 import com.example.androidmvvmcoroutines.util.Constant
 import retrofit2.Call

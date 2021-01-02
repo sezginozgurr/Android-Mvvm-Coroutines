@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 class BaseAdapter<T>(
     private val context: Context,
     private val resourceId: Int,
-    private var items: ArrayList<T>?,
+    private var items: List<T>?,
     private var setItemView : (v: View?, item: T, position: Int)->Unit
 ) : RecyclerView.Adapter<BaseAdapter<T>.ViewHolder>() {
 
@@ -28,7 +28,7 @@ class BaseAdapter<T>(
         notifyDataSetChanged()
     }
 
-    fun getItems(): ArrayList<T>? {
+    fun getItems(): List<T>? {
         return items
     }
 
@@ -42,11 +42,11 @@ class BaseAdapter<T>(
         view
     )
 
-    fun removeAt(position: Int) {
+/*    fun removeAt(position: Int) {
         items?.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, items!!.size)
-    }
+    }*/
 
     override  fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items!![position]
